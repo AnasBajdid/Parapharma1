@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Plateforme Parapharmaceutique</title>
+    <style>
+        /* Reset some default styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: url('images/image5.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: black;
+        }
+        header, nav a, .btn-primary, h2, #hero h2, #contact h3, #products h3, #about h3 {
+            color: white;
+            text-shadow: none;
+        }
+        h3, h4, p {
+            color: #666666;
+            text-shadow: none;
+        }
+        header {
+            background-color: #2a9d8f;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        header h1 {
+            font-size: 1.5rem;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        nav a:hover {
+            color: #e9c46a;
+        }
+        .hero {
+            background: url('https://images.unsplash.com/photo-1588776814546-3a7a3a7a3a7a?auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 0 1rem;
+        }
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+        }
+        .hero-content {
+            background-color: #2a9d8f;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            display: inline-block;
+            text-align: center;
+        }
+        .hero-content h2 {
+            border-bottom: 3px solid black;
+            display: inline-block;
+            padding-bottom: 0.25rem;
+            margin-bottom: 1rem;
+        }
+        .hero-content p {
+            color: white;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+        }
+        .btn-primary {
+            background-color: #e9c46a;
+            color: #333;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            font-weight: 700;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+        }
+        .btn-primary:hover {
+            background-color: #f4a261;
+            color: white;
+        }
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        section {
+            margin-bottom: 3rem;
+        }
+        h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #264653;
+            border-bottom: 3px solid #2a9d8f;
+            display: inline-block;
+            padding-bottom: 0.25rem;
+        }
+        #contact h3 {
+            background-color: transparent;
+            padding: 0;
+            border-radius: 0;
+        }
+        .contact-content {
+            background-color: #2a9d8f;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            color: white;
+        }
+        .contact-content p {
+            color: white;
+            margin: 0.25rem 0;
+        }
+        .products {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 1.5rem;
+            justify-content: flex-start;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            padding: 1rem;
+        }
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease;
+            width: 220px;
+            height: 320px;
+            margin: 0;
+            flex-shrink: 0;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        .product-card img {
+            width: 100%;
+            height: 120px;
+            object-fit: contain;
+            padding: 5px;
+        }
+        .product-info {
+            padding: 1rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-y: auto;
+            max-height: 140px;
+        }
+        .product-info h4 {
+            margin-bottom: 0.5rem;
+            color: #2a9d8f;
+        }
+        .product-info p {
+            flex-grow: 1;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            color: #555;
+        }
+        .product-price {
+            font-weight: 700;
+            color: #e76f51;
+            font-size: 1.1rem;
+        }
+        .about {
+            background-color: #2a9d8f;
+            padding: 2rem;
+            border-radius: 8px;
+            color: white;
+        }
+        .about p {
+            color: white;
+        }
+        h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #264653;
+            border-bottom: 3px solid black;
+            display: inline-block;
+            padding-bottom: 0.25rem;
+        }
+        footer {
+            background-color: #264653;
+            color: white;
+            text-align: center;
+            padding: 1rem 2rem;
+        }
+        .social-links {
+            margin: 1rem 0;
+        }
+        .social-links a {
+            color: white;
+            margin: 0 0.5rem;
+            font-size: 1.5rem;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .social-links a:hover {
+            color: #e9c46a;
+        }
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            nav ul {
+                flex-direction: column;
+                gap: 0.75rem;
+                margin-top: 0.5rem;
+            }
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+    <style>
+        .btn-buy {
+            background-color: #30e3ce;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: background-color 0.3s ease;
+            margin-top: 0.5rem;
+            width: 100%;
+        }
+        .btn-buy:hover {
+            background-color: #264653;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Parapharma</h1>
+        <nav>
+            <ul>
+                <li><a href="#hero">Accueil</a></li>
+                <li><a href="#contact">Contactez-nous</a></li>
+                <li><a href="#products">Produits</a></li>
+                <li><a href="#about">À propos</a></li>
+                <li><a href="#" id="cart-icon" title="Panier" style="cursor:pointer; font-size: 1.5rem; user-select:none;">🛒</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            <h2>Bienvenue sur Parapharma</h2>
+            <p>Nous sommes ravis de vous accueillir sur Parapharma, votre plateforme de confiance pour tous vos besoins parapharmaceutiques. Notre mission est de vous offrir des produits de qualité, des conseils personnalisés et un service exceptionnel. Que vous soyez à la recherche de soins de beauté, de produits de santé naturels, ou de compléments alimentaires, nous avons ce qu'il vous faut !</p>
+            <a href="#products" class="btn-primary">Voir les produits</a>
+        </div>
+    </section>
+
+    <main>
+
+        <section id="products">
+            <h3>Nos Produits</h3>
+            <div class="products" id="products-container">
+                <article class="product-card">
+                    <img src="images/image1.jpg" alt="Noreva Actipur 3en1 Soin Anti-Imperfections Correcteur Intensif – 30 ml" />
+                    <div class="product-info">
+                        <h4>Noreva Actipur 3en1 Soin Anti-Imperfections Correcteur Intensif – 30 ml</h4>
+                        <p>Formulé pour favoriser la diminution des boutons et des points noirs sur les peaux à tendance acnéique des adolescents et des adultes, Actipur® Soin anti-imperfections intensif freine la prolifération bactérienne, assainit la peau et réduit les sensations d’irritation. Grâce à sa double action en surface et en profondeur, et à une application quotidienne, la peau retrouve progressivement son équilibre et devient plus lisse et plus nette.</p>
+                        <div class="product-price">123Dhs</div>
+                        <button class="btn-buy" data-product-id="1">Acheter</button>
+                    </div>
+                </article>
+                <article class="product-card">
+                    <img src="images/image2.jpg" alt="Acm CBphane Shampooing énergisant – 200 ml" />
+                    <div class="product-info">
+                        <h4>Acm CBphane Shampooing énergisant – 200 ml</h4>
+                        <p>Cheveux fragilisés, ternes et fatigués</p>
+                        <div class="product-price">117Dhs</div>
+                        <button class="btn-buy" data-product-id="2">Acheter</button>
+                    </div>
+                </article>
+                <article class="product-card">
+                    <img src="images/image3.jpg" alt="Cerave SA Gel Nettoyant Anti-rugosités – 236 ml" />
+                    <div class="product-info">
+                        <h4>Cerave SA Gel Nettoyant Anti-rugosités – 236 ml</h4>
+                        <p>Peaux Sèches, Rugueuses et Squameuses
+    - Nettoie en douceur, favorise l’élimination des rugosités sans altérer la barrière protectrice de la peau. Aux 3 céramides essentiels, acide salicylique et acide hyaluronique</p>
+                        <div class="product-price">160Dhs</div>
+                        <button class="btn-buy" data-product-id="3">Acheter</button>
+                    </div>
+                </article>
+                <article class="product-card">
+                    <img src="images/image7.jpg" alt="Cétaphil – Ecran UVA/UVB Defense SPF50 – 50 ml" />
+                    <div class="product-info">
+                        <h4>Cétaphil – Ecran UVA/UVB Defense SPF50 – 50 ml</h4>
+                        <p>Cette crème solaire contient 7 filtres chimiques et un écran minéral. Elle est spécifiquement concue pour une très bonne Protection Solaire contre les UV.</p>
+                        <div class="product-price">201 Dhs</div>
+                        <button class="btn-buy" data-product-id="4">Acheter</button>
+                    </div>
+                </article>
+                <article class="product-card">
+                    <img src="images/image8.jpg" alt="RILASTIL SUN SYSTEM DRY TOUCH SPF 50+ 200 ml" />
+                    <div class="product-info">
+                        <h4>RILASTIL SUN SYSTEM DRY TOUCH SPF 50+ 200 ml</h4>
+                        <p>Brume corporelle ultra-légère au toucher sec, rapidement absorbée, indiquée pour les peaux très légères et sensibles. Il assure une protection à large spectre contre les rayons UVB-UVA et laisse la peau soyeuse et sèche</p>
+                        <div class="product-price">255Dhs</div>
+                        <button class="btn-buy" data-product-id="5">Acheter</button>
+                    </div>
+                </article>
+                <article class="product-card">
+                    <img src="images/image9.jpg" alt="La Roche-Posay Hyalu B5 Sérum – 30 ml" />
+                    <div class="product-info">
+                        <h4>La Roche-Posay Hyalu B5 Sérum – 30 ml</h4>
+                        <p> Gel frais hydratant repulpant. Appliquer matin et soir sur le visage, cou et décolleté. Tous types de peaux. Développé pour les personnes intolérantes au nickel.</p>
+                        <div class="product-price">440Dhs</div>
+                        <button class="btn-buy" data-product-id="6">Acheter</button>
+                    </div>
+                </article>
+                <article class="product-card">
+                    <img src="images/image10.jpg" alt="A-derma Exomega Huile lavante émolliente anti-grattage 200 ml" />
+                    <div class="product-info">
+                        <h4>A-derma Exomega Huile lavante émolliente anti-grattage 200 ml</h4>
+                        <p>Huile idéale pour l’hygiène quotidienne des peaux sèches à tendance atopique</p>
+                        <div class="product-price">75Dhs</div>
+                        <button class="btn-buy" data-product-id="7">Acheter</button>
+                    </div>
+                </article>
+                <article class="product-card">
+                    <img src="images/image11.jpg" alt="Apivita Lotion Tonic Anti-chute 150ml" />
+                    <div class="product-info">
+                        <h4>Apivita Lotion Tonic Anti-chute 150ml</h4>
+                        <p>Soin efficace et holistique contre la chute des cheveux : prévient, réduit et retarde la chute des cheveux 4 actions combinées en une seule lotion pour des cheveux sains, plus épais et plus forts
+                            Prévient et réduit la chute des cheveux grâce à au Complexe Hippophae TC, aux protéines de lupin et à la vitamine B3.
+                            Tonifie et revitalise grâce à 10 acides aminés, des protéines de blé, des extraits de quinquina, du thym, du ginseng et de l’equisetum.</p>
+                        <div class="product-price">406Dhs</div>
+                        <button class="btn-buy" data-product-id="8">Acheter</button>
+                    </div>
+                </article>
+                <article class="product-card">
+                    <img src="images/image12.jpg" alt="Algotherm AlgoEssential Lait Démaquillant Confort – 200ml" />
+                    <div class="product-info">
+                        <h4>Algotherm AlgoEssential Lait Démaquillant Confort – 200ml</h4>
+                        <p>Démaquille efficacement le visage et les yeux</p>
+                        <div class="product-price">83Dhs</div>
+                        <button class="btn-buy" data-product-id="9">Acheter</button>
+                    </div>
+                </article>
+                <article class="product-card">
+                    <img src="images/image13.jpg" alt="NUXE MEN Gel de Rasage Anti-irritations 150ml" />
+                    <div class="product-info">
+                        <h4>NUXE MEN Gel de Rasage Anti-irritations 150ml</h4>
+                        <p>Cette mousse à raser en gel, dense et onctueuse, à l’extrait de Bois de Santal, permet un rasage facile et précis sans irritations. Parfum masculin boisé et épicé.</p>
+                        <div class="product-price">165Dhs</div>
+                        <button class="btn-buy" data-product-id="10">Acheter</button>
+                    </div>
+                </article>
+            </div>
+            <div id="cart-section" style="margin-top: 2rem; background: white; padding: 1rem; border-radius: 8px; max-width: 600px; display:none;">
+                <h3>Votre Panier</h3>
+                <div id="cart-items"></div>
+                <div style="margin-top: 1rem;">
+                    <button id="checkout-button" style="background-color: #2a9d8f; color: white; padding: 0.5rem 1rem; border: none; border-radius: 5px; cursor: pointer;">Passer la commande</button>
+                </div>
+            </div>
+
+        <section id="about" class="about">
+            <h3>🧾 À propos de nous</h3>
+            <p>Bienvenue sur parapharma, votre parapharmacie en ligne dédiée à la santé, la beauté et le bien-être.</p>
+            <p>Créée avec la volonté d'offrir à chacun un accès facile, sécurisé et rapide à des produits parapharmaceutiques de qualité, notre plateforme met à votre disposition une large gamme de soins et de produits sélectionnés avec rigueur.</p>
+        </section>
+
+    <section id="contact">
+        <div class="contact-content">
+            <h3>📞 Contactez-nous</h3>
+            <p>Notre équipe est à votre disposition !</p>
+            <p>📧 Email : parapharma2025@gmail.com</p>
+            <p>📞 Téléphone : 0616068608</p>
+            <p>📍 Adresse : 12 Rue Hay Dakhla , 80000 Agadir , Maroc</p>
+            <p>🕐 Horaires : Du lundi au vendredi, de 9h à 18h</p>
+        </div>
+    </section>
+    </main>
+
+    <footer>
+        <div class="social-links">
+            <a href="#" aria-label="Facebook" title="Facebook">&#x1F426;</a>
+            <a href="#" aria-label="Twitter" title="Twitter">&#x1F426;</a>
+            <a href="#" aria-label="Instagram" title="Instagram">&#x1F426;</a>
+        </div>
+        <p>&copy; 2024 Plateforme Parapharmaceutique. Tous droits réservés.</p>
+    </footer>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js"></script>
+
+    <script>
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAkaW58Gq4_mEinZi8ZXmT_2ik3KY07CG4",
+            authDomain: "parapharma-153db.firebaseapp.com",
+            databaseURL: "https://parapharma-153db-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "parapharma-153db",
+            storageBucket: "parapharma-153db.firebasestorage.app",
+            messagingSenderId: "564194433866",
+            appId: "1:564194433866:web:d1d1105994223f7938bfb3"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Removed login and registration form handling scripts as requested
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    <script>
+      console.log("Inline script running");
+    </script>
+    <script src="homepage.js" type="module"></script>
+    <script src="script.js"></script>
+</body>
+</html>
