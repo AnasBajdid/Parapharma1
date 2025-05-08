@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Votre Panier - Parapharma</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        h1 {
+            color: #2a9d8f;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        #cart-items {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .cart-item {
+            display: flex;
+            align-items: center;
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        .cart-item img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            margin-right: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: #fff;
+        }
+        .cart-item-details {
+            flex-grow: 1;
+        }
+        .cart-item-details h4 {
+            margin: 0 0 0.5rem 0;
+            color: #2a9d8f;
+        }
+        .cart-item-details p {
+            margin: 0.25rem 0;
+        }
+        .cart-item-quantity {
+            font-weight: bold;
+            margin-right: 1rem;
+        }
+        .cart-item-price {
+            font-weight: bold;
+            color: #e76f51;
+            margin-right: 1rem;
+        }
+        .remove-button {
+            background-color: #e76f51;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 0.5rem 0.75rem;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        #finish-message {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #1f6f6b;
+            margin-top: 2rem;
+            display: none;
+        }
+        #finish-button {
+            display: block;
+            margin: 2rem auto 0 auto;
+            background-color: #2a9d8f;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 0.75rem 2rem;
+            font-size: 1.1rem;
+            cursor: pointer;
+            font-weight: 700;
+            transition: background-color 0.3s ease;
+        }
+        #finish-button:hover {
+            background-color: #1f6f6b;
+        }
+        a.back-link {
+            display: inline-block;
+            margin-bottom: 1rem;
+            color: #2a9d8f;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        a.back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <a href="Anas.html" class="back-link">&larr; Retour à la boutique</a>
+    <h1>Votre Panier</h1>
+    <div id="cart-items">
+        <!-- Cart items will be rendered here -->
+    </div>
+    <button id="finish-button">Terminer l'achat</button>
+    <div id="finish-message">Parapharma vous remercie pour votre achat</div>
+
+    <script>
+        const cartItemsDiv = document.getElementById('cart-items');
+        const finishButton = document.getElementById('finish-button');
+        const finishMessage = document.getElementById('finish-message');
+
+        // Load cart from localStorage
+        let cart = [];
+        const loggedInUserId = localStorage.getItem("loggedInUserId");
+        if (loggedInUserId) {
+            const savedCart = localStorage.getItem(`cart_${loggedInUserId}`);
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+            }
+        } else {
+            // If no user logged in, try generic cart key for testing
+            const savedCart = localStorage.getItem('cart_guest');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+            }
+        }
+
+        function saveCart() {
+            if (loggedInUserId) {
+                localStorage.setItem(`cart_${loggedInUserId}`, JSON.stringify(cart));
+            } else {
+                localStorage.setItem('cart_guest', JSON.stringify(cart));
+            }
+        }
+
+        function renderCart() {
+            cartItemsDiv.innerHTML = '';
+            if (cart.length === 0) {
+                if (finishMessage.style.display === 'block') {
+                    // Do not show empty cart message if finish message is visible
+                    finishButton.style.display = 'none';
+                    return;
+                }
+                // Remove empty cart message completely as per user request
+                cartItemsDiv.innerHTML = '';
+                finishButton.style.display = 'none';
+                return;
+            }
+            finishButton.style.display = 'block';
+            cart.forEach((item, index) => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'cart-item';
+
+                const img = document.createElement('img');
+                img.src = item.image || 'images/image-placeholder.png';
+                img.alt = item.name;
+
+                const detailsDiv = document.createElement('div');
+                detailsDiv.className = 'cart-item-details';
+
+                const nameH4 = document.createElement('h4');
+                nameH4.textContent = item.name;
+
+                const quantityP = document.createElement('p');
+                quantityP.textContent = `Quantité: ${item.quantity}`;
+
+                const priceP = document.createElement('p');
+                priceP.textContent = `Prix unitaire: ${item.price} Dhs`;
+
+                detailsDiv.appendChild(nameH4);
+                detailsDiv.appendChild(quantityP);
+                detailsDiv.appendChild(priceP);
+
+                const quantitySpan = document.createElement('span');
+                quantitySpan.className = 'cart-item-quantity';
+
+                const priceSpan = document.createElement('span');
+                priceSpan.className = 'cart-item-price';
+
+                const removeButton = document.createElement('button');
+                removeButton.className = 'remove-button';
+                removeButton.textContent = 'Supprimer';
+                removeButton.addEventListener('click', () => {
+                    removeFromCart(index);
+                });
+
+                itemDiv.appendChild(img);
+                itemDiv.appendChild(detailsDiv);
+                itemDiv.appendChild(removeButton);
+
+                cartItemsDiv.appendChild(itemDiv);
+            });
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            saveCart();
+            renderCart();
+        }
+
+        finishButton.addEventListener('click', () => {
+            if (cart.length === 0) {
+                alert('Votre panier est vide.');
+                return;
+            }
+            cart = [];
+            saveCart();
+            renderCart();
+            finishButton.style.display = 'none';
+            finishMessage.style.display = 'block';
+        });
+
+        renderCart();
+    </script>
+</body>
+</html>
